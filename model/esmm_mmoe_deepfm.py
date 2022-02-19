@@ -65,7 +65,7 @@ class CustomModel(tf.keras.Model):
         return {m.name: m.result() for m in self.metrics if not m.name.startswith("multi")}
 
 
-def DeepFM_MMOE_ESMM(
+def ESMM_MMOE_DeepFM(
     linear_feature_columns,
     dnn_feature_columns,
     fm_group=(DEFAULT_GROUP_NAME,),
@@ -83,7 +83,7 @@ def DeepFM_MMOE_ESMM(
     task_types=("binary", "binary", "binary"),
     task_names=("ctr", "ctcvr", "ctvoi"),
 ):
-    """Instantiates the DeepFM_MMOE_ESMM Network architecture.
+    """Instantiates the ESMM_MMOE_DeepFM Network architecture.
 
     :param linear_feature_columns: An iterable containing all the features used by linear part of the model.
     :param dnn_feature_columns: An iterable containing all the features used by deep part of the model.

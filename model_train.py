@@ -2,7 +2,7 @@ import tensorflow as tf
 from deepctr.feature_column import DenseFeat, SparseFeat
 from tensorflow.python.ops.parsing_ops import FixedLenFeature
 
-from model.esmm_mmoe_deepfm import DeepFM_MMOE_ESMM
+from model.esmm_mmoe_deepfm import ESMM_MMOE_DeepFM
 from utils.preprocess import input_fn_tfrecord
 
 
@@ -47,15 +47,23 @@ if __name__ == "__main__":
         "train", "./data/adult.tr.tfrecords", feature_description, labels
     )
     test_model_input = input_fn_tfrecord(
-        "test", "./data/adult.te.tfrecords", feature_description, labels, batch_size=2048
+        "test",
+        "./data/adult.te.tfrecords",
+        feature_description,
+        labels,
+        batch_size=2048,
     )
     validation_model_input = input_fn_tfrecord(
-        "validation", "./data/adult.va.tfrecords", feature_description, labels, batch_size=2048
+        "validation",
+        "./data/adult.va.tfrecords",
+        feature_description,
+        labels,
+        batch_size=2048,
     )
 
     # 3.Define Model,train,predict and evaluate
 
-    prediction_model, train_model = DeepFM_MMOE_ESMM(
+    prediction_model, train_model = ESMM_MMOE_DeepFM(
         linear_feature_columns, dnn_feature_columns, task_names=labels
     )
     metrics = [
@@ -86,5 +94,7 @@ if __name__ == "__main__":
 
     # test
     eval_result = prediction_model.evaluate(test_model_input)
-    scores = {name: loss for name, loss in zip(prediction_model.metrics_names, eval_result)}
+    scores = {
+        name: loss for name, loss in zip(prediction_model.metrics_names, eval_result)
+    }
     print(scores)
